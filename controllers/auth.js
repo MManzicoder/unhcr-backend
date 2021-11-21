@@ -17,3 +17,7 @@ const login = async (req, res)=>{
           console.log("Error ...", error.message);
       }
 }
+
+module.exports = {
+ login
+}
