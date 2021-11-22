@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 const campSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -28,4 +28,4 @@ const campSchema = new mongoose.Schema({
     timestamps: true
 })
 
-exports.Camp = mongoose.model("Camp", campSchema);
+export const Camp = mongoose.model("Camp", campSchema);
