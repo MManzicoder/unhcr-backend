@@ -1,6 +1,5 @@
 import {buildSchema} from 'graphql'
 
-
 const familySchema = buildSchema(`
 type Family {
     _id: ID!,
