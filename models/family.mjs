@@ -1,4 +1,5 @@
-const mongoose = require("mongoose");
+// const mongoose = require("mongoose");
+import mongoose from 'mongoose'
 const familySchema = new mongoose.Schema({
     leader: {
      type: String,
@@ -9,8 +10,10 @@ const familySchema = new mongoose.Schema({
         required: true
     },
 
-}, {
+}, { 
     timestamps: true
 })
 
-exports.Family = mongoose.model("family", familySchema);
+const Family = mongoose.model("family", familySchema);
+
+export default Family;
