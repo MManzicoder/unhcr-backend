@@ -1,8 +1,9 @@
-const { Admin } = require("../models/admin");
-const { createToken } = require("../utils/token")
-const { comparePassword } = require("../utils/hash")
+const { Admin } = require("../../models/admin");
+const { createToken } = require("../../utils/token")
+const { comparePassword } = require("../../utils/hash")
 
-const login =  async (req, res)=>{
+export default {
+  loginAdmin :  async ({email, password})=>{
       try {
         let {email, password} = req.body;
         let user = await Admin.findOne({email});
@@ -16,6 +17,7 @@ const login =  async (req, res)=>{
       } catch (error) {
           console.log("Error ...", error.message);
       }
+}
 }
 
 module.exports = {
