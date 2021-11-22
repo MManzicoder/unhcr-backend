@@ -2,7 +2,7 @@ const { Admin } = require("../models/admin");
 const { createToken } = require("../utils/token")
 const { comparePassword } = require("../utils/hash")
 
-const login = async (req, res)=>{
+const login =  async (req, res)=>{
       try {
         let {email, password} = req.body;
         let user = await Admin.findOne({email});
