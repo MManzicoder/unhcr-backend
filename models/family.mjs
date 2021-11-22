@@ -2,11 +2,14 @@
 import mongoose from 'mongoose'
 const familySchema = new mongoose.Schema({
     leader: {
-     type: String,
+     type: ObjectId,
+     ref: "Leader",
      required: true
     },
-    children: {
-        type: Number,
+    children: [ObjectId],
+    campName: {
+        type: ObjectId,
+        ref: "Camp",
         required: true
     },
 
