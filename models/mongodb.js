@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
- export default mongoose.connect(process.env.DB_URL, (err, done)=>{
-    if(err) console.log(err.message);
-    console.log("CONNECTED TO DB ...");
-})
+ export default mongoose.connect(process.env.DB_URL)
+ .then(res=> console.log("CONNECTED TO DB ..."))
+ .catch(err=>console.log(err.message));
