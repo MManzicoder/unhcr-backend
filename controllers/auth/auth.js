@@ -1,25 +1,50 @@
-const { Admin } = require("../../models/admin");
-const { createToken } = require("../../utils/token")
-const { comparePassword } = require("../../utils/hash")
+import { Admin } from "../../models/admin";
+import { createToken } from "../../utils/token.js";
+import { comparePassword, hashPassword, makeUniqueCode } from "../../utils/hash.js";
 
 export default {
   loginAdmin :  async ({email, password})=>{
       try {
-        let {email, password} = req.body;
-        let user = await Admin.findOne({email});
-        if(!user) return res.status(400).json({err: "Invalid email or password!"});
-        const isMatch = await comparePassword(password, user);
-        if(!isMatch) return res.status(400).json({err: "Invalid email or password!"});
-        let token = createToken(user._id);
-        let { _id, username, adminType } = user;
-        email = user.email;
-        return res.json({token, user:{_id, username, email, adminType}}); 
+        let admin = await Admin.findOne({email});
+        if(!admin) return res.status(400).json({err: "Invalid credentials!"});
+        const isMatch = await comparePassword(password, admin.password);
+        if(!isMatch) return res.status(400).json({err: "Invalid credentials!"});
+        let token = createToken(admin._id);
+        return {...admin._doc, _id: admin._id.toString(),token}; 
       } catch (error) {
-          console.log("Error ...", error.message);
+          console.log("Error ..." +error.message);
       }
+},
+createAdmin: async ({firstName, lastName, username, phone, email, password })=>{
+     try {
+          let admin = await Admin.findOne({email});
+          if(admin) throw new Error("Account already exists!");
+          admin = await Admin.findOne({username});
+          const hashedPassword = await hashPassword(admin.password);
+
+          if(admin) throw new Error("Username already taken!");
+          admin = new Admin({
+            firstName,
+            lastName,
+            username,
+            phone,
+            email,
+            password: hashedPassword
+          })
+          const activationcode = makeUniqueCode(30);
+          admin.activationcode = activationcode;
+          admin = await admin.save();
+          if(emailTransporter(admin)){
+          let token = createToken(admin._id);
+          return {...admin._doc, _id: admin._id.toString(),token};
+          };
+          
+          throw new Error("An error occured!");
+
+     } catch (error) {
+       console.log("Error ..."+error.message);
+     }
 }
 }
 
-module.exports = {
- login
-}
+

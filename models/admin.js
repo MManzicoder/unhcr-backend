@@ -25,6 +25,9 @@ const adminSchema = new mongoose.Schema({
     adminType: {
         type: String,
         default: "ADMIN"
+    },
+    activationcode: {
+        type: String
     }
 })
 
