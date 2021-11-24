@@ -1,4 +1,4 @@
-import { Admin } from "../../models/admin";
+import { Admin } from "../../models/admin.js";
 import { createToken } from "../../utils/token.js";
 import { comparePassword, hashPassword, makeUniqueCode } from "../../utils/hash.js";
 

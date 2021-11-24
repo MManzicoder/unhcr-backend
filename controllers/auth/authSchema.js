@@ -1,4 +1,4 @@
-const { buildSchema } = require("graphql");
+import { buildSchema } from "graphql";
 
 export default buildSchema(`
     input UserData {
@@ -28,7 +28,7 @@ export default buildSchema(`
     }
     type RootMutation{
         createAdmin(userInput: UserData): Admin!
-        updateAdmin(id: ID! data: userData!): Admin!
+        updateAdmin(id: ID! data: UserData!): Admin!
         deleteAdmin(id: ID!): Message!
     }
     schema{
