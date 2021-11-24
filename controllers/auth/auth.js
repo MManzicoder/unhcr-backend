@@ -44,7 +44,20 @@ createAdmin: async ({firstName, lastName, username, phone, email, password })=>{
      } catch (error) {
        console.log("Error ..."+error.message);
      }
-}
+},
+updateAdmin: async ({id, data: { firstName, lastName, username, phone, email, password}}, req) =>{
+         let admin = await Admin.findById(id);
+         if(!admin) throw new Error("Not found!");
+        admin = await Product.findOneAndUpdate({_id: id}, {firstName, lastName, username, phone, email, password}, {new: true});
+         return { ...admin._doc, _id: admin._id.toString()}
+    },
+deleteAdmin: async ({id}, req) =>{
+         let admin = await Admin.findById(id);
+         if(!admin) throw new Error("Not found!");
+         await Admin.findByIdAndDelete(id, (err, done)=>{
+           if(!err) return {message: "Deleted user!"}
+         });
+    },
 }
 
 
