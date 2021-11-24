@@ -12,8 +12,8 @@ export const emailTransporter = user =>{
         host: "smtp.gmail.com",
         secure: true,
         auth: {
-          user: `${process.env.EMAIL}`,
-          pass: `${process.env.EMAIL_PASS}`
+          user: process.env.EMAIL,
+          pass: process.env.EMAIL_PASS
         }
     })
       const sendMailOptions = {
@@ -32,7 +32,7 @@ export const emailTransporter = user =>{
       }
 
       emailTransporter.sendMail(sendMailOptions, (err, res)=>{
-          if(err) throw new Error("disconnected to internet");
+          if(err) throw new Error(err.message);
           return { message: "Email sent!, verify your account!"}
       })
 }
