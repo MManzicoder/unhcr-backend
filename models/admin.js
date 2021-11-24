@@ -26,9 +26,14 @@ const adminSchema = new mongoose.Schema({
         type: String,
         default: "ADMIN"
     },
+    active: {
+       type: Boolean,
+       default: false
+    },
     activationcode: {
         type: String
     }
+
 })
 
 export const Admin = mongoose.model("admin", adminSchema);

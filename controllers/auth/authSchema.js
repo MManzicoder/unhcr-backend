@@ -24,10 +24,11 @@ export default buildSchema(`
     }
 
     type RootQuery{
-        loginAdmin(email: String! password: String!): Admin!       
+        hello: Message!
+        loginAdmin(email: String! password: String!): Admin       
     }
     type RootMutation{
-        createAdmin(userInput: UserData): Admin!
+        createAdmin(userInput: UserData): Admin
         updateAdmin(id: ID! data: UserData!): Admin!
         deleteAdmin(id: ID!): Message!
     }
