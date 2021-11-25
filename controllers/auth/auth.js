@@ -46,7 +46,7 @@ createAdmin: async ({userInput: {firstName, lastName, username, phone, email, pa
             return {message: "Verify your account"};
           })  
           .catch(err=>{
-            return {error: err.message};
+            return new Error(err.message);
           })
 
 
