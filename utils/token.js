@@ -31,8 +31,5 @@ export const emailTransporter = user =>{
         `
       }
 
-      emailTransporter.sendMail(sendMailOptions, (err, res)=>{
-          if(err) throw new Error(err.message);
-          return { message: "Email sent!, verify your account!"}
-      })
+     return emailTransporter.sendMail(sendMailOptions);
 }

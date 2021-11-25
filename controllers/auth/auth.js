@@ -40,18 +40,24 @@ createAdmin: async ({userInput: {firstName, lastName, username, phone, email, pa
           const activationcode = makeUniqueCode(30);
           admin.activationcode = activationcode;
           admin = await admin.save();
-          if(emailTransporter(admin)){
-          let token = createToken(admin._id);
-          return {...admin._doc, _id: admin._id.toString(),token};
-          }else{
-           return new Error("An error occured!");
-          }
-          
+
+          emailTransporter(admin)
+          .then(res=>{
+            console.log(res);
+            return {message: "Verify your account"};
+          })  
+          .catch(err=>{
+            console.log(err.message);
+            return {error: err.message};
+          })
 
 
      } catch (error) {
        return new Error(error.message);
      }
+},
+verifyAccount: async (args, req)=>{
+  console.log(req.params);
 },
 updateAdmin: async ({id, data: { firstName, lastName, username, phone, email, password}}, req) =>{
          let admin = await Admin.findById(id);

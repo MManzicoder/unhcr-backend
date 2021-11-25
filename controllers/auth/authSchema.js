@@ -28,7 +28,7 @@ export default buildSchema(`
         loginAdmin(email: String! password: String!): Admin       
     }
     type RootMutation{
-        createAdmin(userInput: UserData): Admin
+        createAdmin(userInput: UserData): Message
         updateAdmin(id: ID! data: UserData!): Admin!
         deleteAdmin(id: ID!): Message!
     }
