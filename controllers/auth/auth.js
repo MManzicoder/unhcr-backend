@@ -43,11 +43,9 @@ createAdmin: async ({userInput: {firstName, lastName, username, phone, email, pa
 
           emailTransporter(admin)
           .then(res=>{
-            console.log(res);
             return {message: "Verify your account"};
           })  
           .catch(err=>{
-            console.log(err.message);
             return {error: err.message};
           })
 
@@ -56,8 +54,19 @@ createAdmin: async ({userInput: {firstName, lastName, username, phone, email, pa
        return new Error(error.message);
      }
 },
-verifyAccount: async (args, req)=>{
-  console.log(req.params);
+verifyAccount: async ({activationcode}, req)=>{
+     try {
+       let admin = await Admin.findOne({activationcode});
+       if(!admin) return new Error("Invalid code!");
+       admin.active = true;
+       admin.activationcode = undefined;
+       admin = await admin.save();
+       const token = await createToken(admin._id);
+       return {...admin._doc, _id: admin._id.toString(), token }
+
+     } catch (error) {
+       return new Error(error.message);
+     }
 },
 updateAdmin: async ({id, data: { firstName, lastName, username, phone, email, password}}, req) =>{
          let admin = await Admin.findById(id);
