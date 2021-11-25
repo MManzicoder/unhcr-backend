@@ -25,10 +25,10 @@ const familyResolvers = {
         }
     ),
     createFamily: errorHandle(
-        async args => {
-            const {leader,children} = args.family
+        async args => {        
+            const {leader,children,campName} = args.family
             const family = new Family({
-                leader,children
+                leader,children,campName
             })
             const newFamily = await family.save();
             return {...newFamily._doc,_id:newFamily.id}
@@ -36,11 +36,11 @@ const familyResolvers = {
     ),
     deleteFamily: errorHandle(
         async id => {
+            console.log("Reached here");
             const deletedFamily = await Family.findByIdAndDelete(id);
-            return {
-                ...deletedFamily._doc,
-                _id: deletedFamily.id,
-                createdAt: new Date(deletedFamily._doc.createdAt).toISOString(),
+            console.log(deletedFamily)
+            return {                
+                _id: deletedFamily.id               
               }
         }
     ),

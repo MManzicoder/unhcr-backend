@@ -1,15 +1,31 @@
 import {buildSchema} from 'graphql'
 
 const familySchema = buildSchema(`
+type Child{
+    firstName:String!,
+    lastName:String!,
+    dob:String!,
+    education:Int!
+    defects:[String!]
+}
 type Family {
     _id: ID!,
     leader: String!,
-    children:Int!,
-    createdAt:String!
+    campName:String!,
+    children:[Child!],    
+    createdAt:String! 
+},
+input childData{
+    firstName:String!,
+    lastName:String!,
+    dob:String!,
+    education:Int!
+    defects:[String!]
 },
 input FamilyInput{
     leader:String!,
-    children:Int!
+    campName:String!,
+    children:[childData!]
 }
 type RootQuery{
     families:[Family!]
