@@ -1,25 +1,20 @@
-
+import("./models/mongodb.js");
 import dotenv from 'dotenv'
 dotenv.config();
-
 import express from 'express'
-import mongoose from 'mongoose'
 import { graphqlHTTP } from "express-graphql";
-
+import auth from './controllers/auth/auth.js';
+import authSchema from "./controllers/auth/authSchema.js";
 import  familyResolvers from "./controllers/families/resolver.mjs";
 import  familySchema  from "./controllers/families/schema.mjs";
 const app = express();
 const PORT = process.env.PORT || 5000
 
-mongoose.connect(process.env.DB_URL, (err, done)=>{
-    if(err) console.log(err.message);
-    console.log("CONNECTED TO DB ...");
-})
 
 app.use('/auth',
 graphqlHTTP({
-    schema:familySchema,
-    rootValue:familyResolvers,
+    schema: authSchema,
+    rootValue: auth,
     graphiql:true
 })
 )

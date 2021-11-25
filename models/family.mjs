@@ -1,4 +1,3 @@
-// const mongoose = require("mongoose");
 import mongoose from 'mongoose'
 const {ObjectId} = mongoose.Schema
 const familySchema = new mongoose.Schema({
