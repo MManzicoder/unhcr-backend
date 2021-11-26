@@ -31,7 +31,8 @@ const adminSchema = new mongoose.Schema({
        default: false
     },
     activationcode: {
-        type: String
+        type: String,
+        unique: true
     }
 
 })
