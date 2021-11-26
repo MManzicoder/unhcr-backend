@@ -30,7 +30,7 @@ export default buildSchema(`
     }
     type RootMutation{
         createAdmin(userInput: UserData): Message!
-        updateAdmin(id: ID! data: UserData!): Admin!
+        updateAdmin(id: String! data: UserData!): Admin!
         deleteAdmin(id: ID!): Message!
     }
     schema{
