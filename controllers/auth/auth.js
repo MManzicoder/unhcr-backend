@@ -3,6 +3,7 @@ import * as bcrypt from "bcrypt";
 import { createToken } from "../../utils/token.js";
 import { comparePassword, hashPassword, makeUniqueCode } from "../../utils/hash.js";
 import { emailTransporter } from "../../utils/token.js";
+import mongoose from "mongoose";
 
 export default {
   hello: async ()=>{
@@ -67,7 +68,9 @@ verifyAccount: async ({activationcode}, req)=>{
      }
 },
 updateAdmin: async ({id, data: { firstName, lastName, username, phone, email, password}}, req) =>{
-         let admin = await Admin.findById(id);
+      const { ObjectId } = mongoose.Types;
+      if(!ObjectId.isValid(id)) return new Error("Invalid ID!");
+         let admin = await Admin.findOne({_id: id});
          if(!admin) return new Error("Not found!");
         admin = await Product.findOneAndUpdate({_id: id}, {firstName, lastName, username, phone, email, password}, {new: true});
          return { ...admin._doc, _id: admin._id.toString()}
