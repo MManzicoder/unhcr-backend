@@ -27,7 +27,6 @@ createAdmin: async ({userInput: {firstName, lastName, username, phone, email, pa
           if(admin) return new Error("Account already exists!");
           admin = await Admin.findOne({username});
           if(admin) return new Error("Username already taken!");
-          // const hashedPassword = await hashPassword(password);
           const hashedPassword = await bcrypt.hash(password, 10);
           admin = new Admin({
             firstName,
@@ -40,14 +39,15 @@ createAdmin: async ({userInput: {firstName, lastName, username, phone, email, pa
           const activationcode = makeUniqueCode(30);
           admin.activationcode = activationcode;
           admin = await admin.save();
-
           emailTransporter(admin)
           .then(res=>{
             return {message: "Verify your account"};
           })  
           .catch(err=>{
+       
             return new Error(err.message);
           })
+          return {message: "Hey verify your account"};
 
 
      } catch (error) {

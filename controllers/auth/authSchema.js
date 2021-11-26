@@ -29,7 +29,7 @@ export default buildSchema(`
         verifyAccount(activationcode: String!): Admin!
     }
     type RootMutation{
-        createAdmin(userInput: UserData): Message
+        createAdmin(userInput: UserData): Message!
         updateAdmin(id: ID! data: UserData!): Admin!
         deleteAdmin(id: ID!): Message!
     }
