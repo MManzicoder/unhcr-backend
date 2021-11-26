@@ -1,4 +1,4 @@
-import { Admin } from "../../models/admin.js";
+import { Admin, isValidID } from "../../models/admin.js";
 import * as bcrypt from "bcrypt"; 
 import { createToken } from "../../utils/token.js";
 import { comparePassword, hashPassword, makeUniqueCode } from "../../utils/hash.js";
@@ -58,7 +58,6 @@ verifyAccount: async ({activationcode}, req)=>{
        let admin = await Admin.findOne({activationcode});
        if(!admin) return new Error("Invalid code!");
        admin.active = true;
-       admin.activationcode = undefined;
        admin = await admin.save();
        const token = await createToken(admin._id);
        return {...admin._doc, _id: admin._id.toString(), token }
@@ -68,22 +67,20 @@ verifyAccount: async ({activationcode}, req)=>{
      }
 },
 updateAdmin: async ({id, data: { firstName, lastName, username, phone, email, password}}, req) =>{
-      const { ObjectId } = mongoose.Types;
-      if(!ObjectId.isValid(id)) return new Error("Invalid ID!");
          let admin = await Admin.findOne({_id: id});
          if(!admin) return new Error("Not found!");
-        admin = await Product.findOneAndUpdate({_id: id}, {firstName, lastName, username, phone, email, password}, {new: true});
+        admin = await Admin.findOneAndUpdate({_id: id}, {firstName, lastName, username, phone, email, password}, {new: true});
          return { ...admin._doc, _id: admin._id.toString()}
     },
-deleteAdmin: async ({id, adminId}, req) =>{
+deleteAdmin: async ({adminId, id}, req) =>{
+         if(!isValidID(id)) return new Error("Invalid ID!")
+         if(!isValidID(adminId)) return new Error("Invalid superId!");
          let admin = await Admin.findById(adminId);
          if(!admin) return new Error("Not found!");
-         if(admin.adminType !=="SUPER ADMIN") return new Error("Access denied!");
+         if(admin.adminType !== "SUPER ADMIN") return new Error("Access denied!");
          admin = await Admin.findById(id);
          if(!admin) return new Error("admin not found!")
-         await Admin.findByIdAndDelete(id, (err, done)=>{
-           if(!err) return {message: "Deleted user!"}
-         });
+         await Admin.findByIdAndDelete(id);
          return {message: "Deleted Account!"};
     },
 }
