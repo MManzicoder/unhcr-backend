@@ -48,8 +48,6 @@ createAdmin: async ({userInput: {firstName, lastName, username, phone, email, pa
             return new Error(err.message);
           })
           return {message: "Hey verify your account"};
-
-
      } catch (error) {
        return new Error(error.message);
      }
@@ -74,12 +72,16 @@ updateAdmin: async ({id, data: { firstName, lastName, username, phone, email, pa
         admin = await Product.findOneAndUpdate({_id: id}, {firstName, lastName, username, phone, email, password}, {new: true});
          return { ...admin._doc, _id: admin._id.toString()}
     },
-deleteAdmin: async ({id}, req) =>{
-         let admin = await Admin.findById(id);
+deleteAdmin: async ({id, adminId}, req) =>{
+         let admin = await Admin.findById(adminId);
          if(!admin) return new Error("Not found!");
+         if(admin.adminType !=="SUPER ADMIN") return new Error("Access denied!");
+         admin = await Admin.findById(id);
+         if(!admin) return new Error("admin not found!")
          await Admin.findByIdAndDelete(id, (err, done)=>{
            if(!err) return {message: "Deleted user!"}
          });
+         return {message: "Deleted Account!"};
     },
 }
 
