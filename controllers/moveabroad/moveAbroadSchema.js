@@ -15,10 +15,11 @@ export default buildSchema(`
     type Message{
         message: String!
     }
-     RootQuery{
+
+    type RootQuery{
       getNewSettlements: [SettleMent!]
      }
-     RootMutation{
+     type RootMutation{
       registerSettlement(data: SettleMentData): Message
      }
      schema{
