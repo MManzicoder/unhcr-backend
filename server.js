@@ -9,6 +9,8 @@ import  familyResolvers from "./controllers/families/resolver.mjs";
 import  familySchema  from "./controllers/families/schema.mjs";
 import fundSchema  from './controllers/funds/schema.js';
 import fundResolver  from './controllers/funds/resolver.js';
+import moveAbroadSchema from './controllers/moveabroad/moveAbroadSchema.js';
+import * as moveabroadResolver from './controllers/moveabroad/moveabroad.js';
 const app = express();
 const PORT = process.env.PORT || 5000
 
@@ -32,6 +34,13 @@ graphqlHTTP({
     schema:familySchema,
     rootValue:familyResolvers,
     graphiql:true
-})
-)
+}))
+
+app.use('/moveabroad',
+graphqlHTTP({
+    schema: moveAbroadSchema,
+    rootValue:moveabroadResolver,
+    graphiql:true
+}))
+
 app.listen(PORT, ()=>console.log(`SERVER RUNNING ON PORT ${PORT} ...`))
