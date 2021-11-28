@@ -7,6 +7,8 @@ import auth from './controllers/auth/auth.js';
 import authSchema from "./controllers/auth/authSchema.js";
 import  familyResolvers from "./controllers/families/resolver.mjs";
 import  familySchema  from "./controllers/families/schema.mjs";
+import fundSchema  from './controllers/funds/schema.js';
+import fundResolver  from './controllers/funds/resolver.js';
 const app = express();
 const PORT = process.env.PORT || 5000
 
@@ -18,6 +20,13 @@ graphqlHTTP({
     graphiql:true
 })
 )
+
+app.use('/funds',
+graphqlHTTP({
+    schema: fundSchema,
+    rootValue:fundResolver,
+    graphiql:true
+}))
 app.use('/users',
 graphqlHTTP({
     schema:familySchema,

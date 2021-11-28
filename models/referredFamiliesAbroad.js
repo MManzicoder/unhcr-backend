@@ -10,7 +10,7 @@ const referredFamilySchema = new mongoose.Schema({
     },
     settled: {
         Type: Boolean,
-        deafu
+        default: false
     }
 }, {
     timestamps: true
