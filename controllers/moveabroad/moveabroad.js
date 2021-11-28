@@ -1,8 +1,10 @@
 import { ReferredFamily } from "../../models/referredFamiliesAbroad.js"
+import { checkAuth } from "../../utils/checkAuth.js";
 
 export default {
  getNewSettleMent: async (args, req)=>{
       try {
+           const {} = checkAuth(req);
             const settlements = await ReferredFamily.find().exec();
             return settlements.map((set, i)=>{
                 return {
