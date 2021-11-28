@@ -14,7 +14,7 @@ const familyResolvers = {
             })
         }
     ),
-    family: errorHandle(
+    family: errorHandle( 
         async id =>{
                 const family = await Family.findOne({_id:id});
                 return {
@@ -25,12 +25,16 @@ const familyResolvers = {
         }
     ),
     createFamily: errorHandle(
-        async args => {        
-            const {leader,children,campName} = args.family
+        async args => {
+            
+            const {man,woman,children,campName} = args.family
+            // console.log(man.personInfo)
             const family = new Family({
-                leader,children,campName
+                man,woman,children,campName
             })
+
             const newFamily = await family.save();
+            
             return {...newFamily._doc,_id:newFamily.id}
         }
     ),

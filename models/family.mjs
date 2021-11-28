@@ -1,22 +1,51 @@
 import mongoose from 'mongoose'
 const {ObjectId} = mongoose.Schema
 const familySchema = new mongoose.Schema({
-    leader: {
-     type: String,
-     required: true
+    man: {     
+        personInfo:{
+            firstName:String,
+            lastName:String,
+            dob:String,
+            gender:String,
+            education:Number,
+            defects:[String],
+         },
+         alive:Boolean,
+         leader:Boolean 
     },
+    speciality:{
+        case:String,
+        concerns:[String]
+    },
+   
+    woman: {     
+         personInfo:{
+            firstName:String,
+            lastName:String,
+            dob:String,
+            gender:String,
+            education:Number,
+            defects:[String],
+         },
+         alive: Boolean,
+         leader:Boolean
+    },
+
     children: [
         {
             firstName: String,
             lastName:String,
             dob: String,
             education: String,
-            defects: [String]
+            gender:String,
+            defects: [String],
+            withUs:Boolean,
+            alive:Boolean,
+            leader:Boolean
         }
     ],
     campName: {
-        type: String,
-        
+        type: String,        
         required: true
     },
    
