@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-const {ObjectId} = mongoose.Schema
+const {ObjectId} = mongoose.SchemaTypes;
 const familySchema = new mongoose.Schema({
     man: {     
         personInfo:{
