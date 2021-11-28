@@ -67,6 +67,7 @@ verifyAccount: async ({activationcode}, req)=>{
      }
 },
 updateAdmin: async ({id, data: { firstName, lastName, username, phone, email, password}}, req) =>{
+         if(!isValidID(id)) return new Error("Invalid ID!");
          let admin = await Admin.findOne({_id: id});
          if(!admin) return new Error("Not found!");
         admin = await Admin.findOneAndUpdate({_id: id}, {firstName, lastName, username, phone, email, password}, {new: true});
