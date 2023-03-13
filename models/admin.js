@@ -40,6 +40,5 @@ const adminSchema = new mongoose.Schema({
 export const Admin = mongoose.model("admin", adminSchema);
 export const isValidID=id=>{
     const { ObjectId } = mongoose.Types;
-      if(ObjectId.isValid(id)) return true;
-      return false;
+      return ObjectId.isValid(id); 
 }
